@@ -5,6 +5,7 @@
 #include "window.h"
 #include "world/world.h"
 
+uint32_t frames = 0;
 void loop() {
     while (true) {
         window_clear();
@@ -22,8 +23,15 @@ void loop() {
 
         player_update();
 
+        if (frames > 0 && frames % 5 * 60 == 0) {
+            world_update(player_get_chunk());
+
+            frames = 0;
+        }
+
         window_draw();
 
+        frames++;
         SDL_Delay(1000 / 60);
     }
 }

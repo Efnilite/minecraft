@@ -12,7 +12,7 @@
 #include "util/vec3.h"
 #include "world/chunk.h"
 
-#define PLAYER_SPEED_METER_PER_SECONDS 1/60.0
+#define PLAYER_SPEED_METER_PER_SECONDS (2 * 1/60.0)
 #define PLAYER_MOUSE_SENSITIVITY 0.1
 
 typedef struct Player {
@@ -47,7 +47,6 @@ void player_update() {
     if (!(movement.x == 0 && movement.z == 0)) {
         movement = vec3d_normalize(&movement);
         movement = vec3d_multiply(&movement, PLAYER_SPEED_METER_PER_SECONDS);
-
         player.position = vec3d_add(&player.position, &movement);
     }
 
@@ -66,13 +65,11 @@ void player_update_mouse(const double dx, const double dy) {
     }
 
     player.pitch = fmax(-180, fmin(180, player.pitch - dy * PLAYER_MOUSE_SENSITIVITY));
-
-    printf("%f %f\n", player.yaw, player.pitch);
 }
 
 Vec2i player_get_chunk() {
     const int x = (int) floor(player.position.x) / CHUNK_SIZE;
     const int z = (int) floor(player.position.z) / CHUNK_SIZE;
 
-    return (Vec2i) {x, z};
+    return vec2i_create(x, z);
 }

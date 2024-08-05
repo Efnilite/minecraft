@@ -4,3 +4,6 @@
   - If chunk exists, load it
   - If chunk does not exist, generate it
 - If player moves render chunks in 2 around player
+
+**6/8**
+- Draw GUI

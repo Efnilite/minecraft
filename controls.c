@@ -4,6 +4,7 @@
 
 #include "controls.h"
 
+#include <assert.h>
 #include <SDL_keyboard.h>
 #include <SDL_mouse.h>
 
@@ -14,6 +15,8 @@ void controls_use_ingame_set(const bool enabled) {
 }
 
 bool keyboard_is_pressing(const int key) {
+    assert(key >= 0 && key < SDL_NUM_SCANCODES);
+
     const Uint8 *keyboard = SDL_GetKeyboardState(nullptr);
 
     return keyboard[key];
